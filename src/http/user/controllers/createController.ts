@@ -3,9 +3,13 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 import { CreateUserService } from '@/services/user/createUser';
 import { UsernameAlreadyExistsError } from '@/services/errors/UsernameAlreadyExistsError';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export class CreateUserController {
-  constructor(private createUserService: CreateUserService) {}
+  constructor(
+    @inject('CreateUserService') private createUserService: CreateUserService
+  ) {}
 
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const createUserBodySchema = z

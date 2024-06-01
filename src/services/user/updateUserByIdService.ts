@@ -2,6 +2,7 @@ import { UsersRepository } from '@/repositories/usersRepository';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
 import { AccountStatus, User, UserRole } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { inject, injectable } from 'tsyringe';
 
 interface UpdateUserServiceRequest {
   userId: number;
@@ -18,8 +19,11 @@ interface UpdateUserServiceResponse {
   updatedUser: User;
 }
 
+@injectable()
 export class UpdateUserByIdService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    @inject('UsersRepository') private usersRepository: UsersRepository
+  ) {}
 
   async execute({
     userId,

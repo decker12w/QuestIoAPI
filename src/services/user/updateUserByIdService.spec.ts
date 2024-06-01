@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { UpdateUserByIdService } from './updateUserByIdService';

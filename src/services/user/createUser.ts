@@ -3,6 +3,7 @@ import { User, UserRole, AccountStatus } from '@prisma/client';
 import { UsersRepository } from '@/repositories/usersRepository';
 import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExistsError';
 import { hash } from 'bcryptjs';
+import { inject, injectable } from 'tsyringe';
 
 interface CreateUserServiceRequest {
   fullname: string;
@@ -18,9 +19,11 @@ interface CreateUserServiceRequest {
 interface CreateUserServiceResponse {
   user: User;
 }
-
+@injectable()
 export class CreateUserService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    @inject('UsersRepository') private usersRepository: UsersRepository
+  ) {}
 
   async execute({
     fullname,

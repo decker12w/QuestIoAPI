@@ -1,6 +1,7 @@
 import { UsersRepository } from '@/repositories/usersRepository';
 import { User } from '@prisma/client';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
+import { inject, injectable } from 'tsyringe';
 
 interface DeleteUserServiceRequest {
   userId: number;
@@ -9,9 +10,11 @@ interface DeleteUserServiceRequest {
 interface DeleteUserServiceResponse {
   user: User;
 }
-
+@injectable()
 export class DeleteUserByIdService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    @inject('UsersRepository') private usersRepository: UsersRepository
+  ) {}
 
   async execute({
     userId,

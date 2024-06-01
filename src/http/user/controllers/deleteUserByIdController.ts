@@ -1,10 +1,15 @@
 import { UserNotFoundError } from '@/services/errors/UserNotFoundError';
 import { DeleteUserByIdService } from '@/services/user/deleteUserByIdService';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
 
-export class DeleteUserController {
-  constructor(private deleteUserByIdService: DeleteUserByIdService) {}
+@injectable()
+export class DeleteUserByIdController {
+  constructor(
+    @inject('DeleteUserByIdService')
+    private deleteUserByIdService: DeleteUserByIdService
+  ) {}
 
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const deleteUserByIdParamsSchema = z.object({

@@ -1,12 +1,16 @@
 import { UserNotFoundError } from '@/services/errors/UserNotFoundError';
 import { UpdateUserByIdService } from '@/services/user/updateUserByIdService';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
 
 // Definir a interface para os parâmetros da rota
-
-export class UpdateUserController {
-  constructor(private updateUserByIdService: UpdateUserByIdService) {}
+@injectable()
+export class UpdateUserByIdController {
+  constructor(
+    @inject('UpdateUserByIdService')
+    private updateUserByIdService: UpdateUserByIdService
+  ) {}
 
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const updateBodySchema = z

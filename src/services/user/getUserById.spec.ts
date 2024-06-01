@@ -1,16 +1,17 @@
+import 'reflect-metadata';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { FindUserByIdService } from './findUserById';
+import { GetUserByIdService } from './getUserById';
 import { faker } from '@faker-js/faker';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
 
 let usersRepository: InMemoryUsersRepository;
-let sut: FindUserByIdService;
+let sut: GetUserByIdService;
 
 describe('Find User By Id Service', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
-    sut = new FindUserByIdService(usersRepository);
+    sut = new GetUserByIdService(usersRepository);
   });
 
   it('should be able to find a user by id', async () => {

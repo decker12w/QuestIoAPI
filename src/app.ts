@@ -1,14 +1,16 @@
+import 'reflect-metadata';
+import '@/lib/container/containerUsers';
 import fastify from 'fastify';
 import { ZodError } from 'zod';
 import { env } from './env';
 import { userRoutes } from './http/user/user.routes';
 
-export const app = fastify();
+const app = fastify();
 
-// Rotas
+// Registro das rotas
 app.register(userRoutes, { prefix: '/user' });
 
-// Error handler
+// Tratamento de erros
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
     return reply
@@ -23,3 +25,5 @@ app.setErrorHandler((error, _, reply) => {
     message: 'Internal server error.',
   });
 });
+
+export { app };
