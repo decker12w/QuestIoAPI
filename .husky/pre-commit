@@ -1,0 +1,3 @@
+echo "🚀 Checking for linting errors and formatting the code 🚀"
+npm run lintAndFormat || (echo "Failed: linting errors" && exit 1)
+echo "Done"
