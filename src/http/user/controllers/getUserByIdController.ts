@@ -1,8 +1,8 @@
 import { UserNotFoundError } from '@/services/errors/UserNotFoundError';
 import { GetUserByIdService } from '@/services/user/getUserById';
+import { ParamsIdInput, paramsIdSchema } from '@/utils/schemas/user/userSchema';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'tsyringe';
-import { z } from 'zod';
 
 @injectable()
 export class GetUserByIdController {
@@ -10,16 +10,15 @@ export class GetUserByIdController {
     @inject('GetUserByIdService') private getUserByIdService: GetUserByIdService
   ) {}
 
-  async handle(request: FastifyRequest, reply: FastifyReply) {
-    const findUserByIdParamsSchema = z.object({
-      id: z.string().transform(Number),
-    });
-
-    const { id } = findUserByIdParamsSchema.parse(request.params);
+  async handle(
+    request: FastifyRequest<{ Params: ParamsIdInput }>,
+    reply: FastifyReply
+  ) {
+    const { id } = paramsIdSchema.parse(request.params);
 
     try {
-      const user = await this.getUserByIdService.execute({ userId: id });
-      return reply.status(200).send({ user });
+      const user = await this.getUserByIdService.execute({ id });
+      return reply.status(200).send(user);
     } catch (error) {
       if (error instanceof UserNotFoundError) {
         return reply.status(404).send({ message: error.message });

@@ -22,16 +22,16 @@ describe('Delete User Service ', () => {
       college_register: faker.string.alphanumeric(6),
     });
 
-    const response = await sut.execute({ userId: userMock.id });
+    const user = await sut.execute({ id: userMock.id });
 
     const deletedUser = await usersRepository.findById(userMock.id);
 
     expect(deletedUser).toBeNull();
-    expect(response.user).toEqual(userMock);
+    expect(user).toEqual(userMock);
   });
 
   it('should not be able to delete a user with wrong id', async () => {
-    await expect(() => sut.execute({ userId: 1 })).rejects.toBeInstanceOf(
+    await expect(() => sut.execute({ id: 1 })).rejects.toBeInstanceOf(
       UserNotFoundError
     );
   });

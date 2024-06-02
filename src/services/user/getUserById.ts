@@ -1,30 +1,21 @@
 import { UsersRepository } from '@/repositories/usersRepository';
-import { User } from '@prisma/client';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
 import { inject, injectable } from 'tsyringe';
+import { ParamsIdInput, UserOutput } from '@/utils/schemas/user/userSchema';
 
-interface FindUserByIdServiceRequest {
-  userId: number;
-}
-
-interface FindUserByIdServiceResponse {
-  user: User;
-}
 @injectable()
 export class GetUserByIdService {
   constructor(
     @inject('UsersRepository') private usersRepository: UsersRepository
   ) {}
 
-  async execute({
-    userId,
-  }: FindUserByIdServiceRequest): Promise<FindUserByIdServiceResponse> {
-    const user = await this.usersRepository.findById(userId);
+  async execute({ id }: ParamsIdInput): Promise<UserOutput> {
+    const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new UserNotFoundError();
     }
 
-    return { user };
+    return user;
   }
 }

@@ -22,13 +22,13 @@ describe('Find User By Id Service', () => {
       college_register: faker.string.alphanumeric(6),
     });
 
-    const { user } = await sut.execute({ userId: userMock.id });
+    const user = await sut.execute({ id: userMock.id });
 
     expect(user.id).toEqual(userMock.id);
   });
 
   it('should not be able to get user profile with wrong id', async () => {
-    await expect(() => sut.execute({ userId: 1 })).rejects.toBeInstanceOf(
+    await expect(() => sut.execute({ id: 1 })).rejects.toBeInstanceOf(
       UserNotFoundError
     );
   });

@@ -1,23 +1,8 @@
 import { UsersRepository } from '@/repositories/usersRepository';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
-import { AccountStatus, User, UserRole } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
-
-interface UpdateUserServiceRequest {
-  userId: number;
-  fullname?: string;
-  username?: string;
-  password?: string;
-  college_register?: string;
-  user_role?: UserRole;
-  account_status?: AccountStatus;
-  xp_count?: number;
-}
-
-interface UpdateUserServiceResponse {
-  updatedUser: User;
-}
+import { UpdateUserService, UserOutput } from '@/utils/schemas/user/userSchema';
 
 @injectable()
 export class UpdateUserByIdService {
@@ -26,7 +11,7 @@ export class UpdateUserByIdService {
   ) {}
 
   async execute({
-    userId,
+    id,
     fullname,
     username,
     password,
@@ -34,8 +19,8 @@ export class UpdateUserByIdService {
     user_role,
     account_status,
     xp_count,
-  }: UpdateUserServiceRequest): Promise<UpdateUserServiceResponse> {
-    const updatedUser = await this.usersRepository.findById(userId);
+  }: UpdateUserService): Promise<UserOutput> {
+    const updatedUser = await this.usersRepository.findById(id);
 
     if (!updatedUser) {
       throw new UserNotFoundError();
@@ -55,8 +40,8 @@ export class UpdateUserByIdService {
     updatedUser.college_register =
       college_register ?? updatedUser.college_register;
 
-    await this.usersRepository.update(userId, updatedUser);
+    await this.usersRepository.update(id, updatedUser);
 
-    return { updatedUser };
+    return updatedUser;
   }
 }

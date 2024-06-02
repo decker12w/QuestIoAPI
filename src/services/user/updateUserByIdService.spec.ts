@@ -34,8 +34,8 @@ describe('Update User Service', () => {
     const updatedStatus = 'ACTIVE';
     const updatedXpCount = 20;
 
-    const { updatedUser } = await sut.execute({
-      userId: userMock.id,
+    const updatedUser = await sut.execute({
+      id: userMock.id,
       fullname: updatedFullname,
       username: updatedUsername,
       password: updatedPassword,
@@ -59,11 +59,12 @@ describe('Update User Service', () => {
   it('should not be able to update a user with wrong id', async () => {
     await expect(() =>
       sut.execute({
-        userId: 1,
+        id: 1,
         fullname: faker.person.fullName(),
         username: faker.internet.userName(),
         password: faker.internet.password(),
         college_register: faker.string.alphanumeric(6),
+        xp_count: 10,
       })
     ).rejects.toBeInstanceOf(UserNotFoundError);
   });

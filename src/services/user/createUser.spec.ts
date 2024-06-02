@@ -14,7 +14,7 @@ describe('Create User Service', () => {
   });
 
   it('should be able to create a user', async () => {
-    const { user } = await sut.execute({
+    const user = await sut.execute({
       fullname: faker.person.fullName(),
       username: faker.internet.userName(),
       password: faker.internet.password(),
