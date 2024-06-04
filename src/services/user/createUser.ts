@@ -15,6 +15,7 @@ export class CreateUserService {
   async execute({
     fullname,
     username,
+    email,
     password,
     college_register,
     user_role = UserRole.USER,
@@ -32,6 +33,7 @@ export class CreateUserService {
     const user = await this.usersRepository.create({
       fullname,
       username,
+      email,
       password: password_hash,
       college_register,
       user_role,

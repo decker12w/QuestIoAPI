@@ -14,6 +14,7 @@ export class UpdateUserByIdService {
     id,
     fullname,
     username,
+    email,
     password,
     college_register,
     user_role,
@@ -28,6 +29,7 @@ export class UpdateUserByIdService {
 
     updatedUser.fullname = fullname ?? updatedUser.fullname;
     updatedUser.username = username ?? updatedUser.username;
+    updatedUser.email = email ?? updatedUser.email;
 
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 6);

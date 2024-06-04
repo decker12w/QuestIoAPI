@@ -11,6 +11,7 @@ export class InMemoryUsersRepository implements UsersRepository {
       fullname: data.fullname,
       username: data.username,
       password: data.password,
+      email: data.email,
       college_register: data.college_register,
       user_role: data.user_role ?? UserRole.USER,
       entry_type: new Date(),
@@ -64,6 +65,9 @@ export class InMemoryUsersRepository implements UsersRepository {
     }
     if (data.password && typeof data.password === 'string') {
       user.password = data.password;
+    }
+    if(data.email && typeof data.email ==='string'){
+      user.email = data.email;
     }
     if (data.college_register && typeof data.college_register === 'string') {
       user.college_register = data.college_register;
