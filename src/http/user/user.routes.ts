@@ -23,6 +23,7 @@ export async function userRoutes(app: FastifyInstance) {
         },
       },
     },
+
     createUserController.handle.bind(createUserController)
   );
   app.get(
