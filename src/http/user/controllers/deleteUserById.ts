@@ -1,5 +1,5 @@
-import { UserNotFoundError } from '@/services/errors/UserNotFoundError';
-import { DeleteUserByIdService } from '@/services/user/deleteUserByIdService';
+import { DeleteUserByIdService } from '@/services/user/deleteUserById';
+import { handleError } from '@/utils/functions/handleError';
 import { ParamsIdInput, paramsIdSchema } from '@/utils/schemas/user/userSchema';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'tsyringe';
@@ -18,13 +18,14 @@ export class DeleteUserByIdController {
     const { id } = paramsIdSchema.parse(request.params);
 
     try {
-      await this.deleteUserByIdService.execute({ id });
-      return reply.status(204).send();
+      await this.deleted(reply, id);
     } catch (error) {
-      if (error instanceof UserNotFoundError) {
-        return reply.status(404).send({ message: error.message });
-      }
-      throw error;
+      return handleError(reply, error);
     }
+  }
+
+  private async deleted(reply: FastifyReply, id: number) {
+    await this.deleteUserByIdService.execute({ id });
+    return reply.status(204).send();
   }
 }

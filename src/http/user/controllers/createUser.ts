@@ -1,9 +1,8 @@
-// http/user/controllers/createController.ts
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { CreateUserService } from '@/services/user/createUser';
-import { UsernameAlreadyExistsError } from '@/services/errors/UsernameAlreadyExistsError';
 import { inject, injectable } from 'tsyringe';
-import { CreateUserInput } from '@/utils/schemas/user/userSchema';
+import { CreateUserInput, UserOutput } from '@/utils/schemas/user/userSchema';
+import { handleError } from '@/utils/functions/handleError';
 
 @injectable()
 export class CreateUserController {
@@ -19,18 +18,13 @@ export class CreateUserController {
 
     try {
       const user = await this.createUserService.execute(data);
-
-      return reply.status(201).send(user);
+      return this.created(reply, user);
     } catch (error) {
-      if (error instanceof UsernameAlreadyExistsError) {
-        return reply.status(409).send({
-          statusCode: 409,
-          errorCode: 'USERNAME_ALREADY_EXISTS',
-          message: 'The username already exists.',
-          details: error.message,
-        });
-      }
-      throw error;
+      return handleError(reply, error);
     }
+  }
+
+  private async created(reply: FastifyReply, user: UserOutput) {
+    return reply.status(201).send(user);
   }
 }

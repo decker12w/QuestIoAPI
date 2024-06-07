@@ -1,7 +1,7 @@
 import { UsersRepository } from '@/repositories/usersRepository';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
 import { inject, injectable } from 'tsyringe';
-import { ParamsIdInput, UserOutput } from '@/utils/schemas/user/userSchema';
+import { ParamsIdInput } from '@/utils/schemas/user/userSchema';
 
 @injectable()
 export class DeleteUserByIdService {
@@ -9,14 +9,17 @@ export class DeleteUserByIdService {
     @inject('UsersRepository') private usersRepository: UsersRepository
   ) {}
 
-  async execute({ id }: ParamsIdInput): Promise<UserOutput> {
+  async execute({ id }: ParamsIdInput): Promise<void> {
+    await this.findUserById(id);
+    await this.usersRepository.delete(id);
+  }
+
+  private async findUserById(id: number) {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new UserNotFoundError();
     }
-
-    await this.usersRepository.delete(id);
 
     return user;
   }

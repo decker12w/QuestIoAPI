@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { CreateUserService } from './createUser';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { faker } from '@faker-js/faker';
+import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExistsError';
 
 let usersRepository: InMemoryUsersRepository;
 let sut: CreateUserService;
@@ -16,6 +17,7 @@ describe('Create User Service', () => {
   it('should be able to create a user', async () => {
     const user = await sut.execute({
       fullname: faker.person.fullName(),
+      email: faker.internet.email(),
       username: faker.internet.userName(),
       password: faker.internet.password(),
       college_register: faker.string.alphanumeric(6),
@@ -30,17 +32,19 @@ describe('Create User Service', () => {
     await usersRepository.create({
       fullname: faker.person.fullName(),
       username,
+      email: faker.internet.email(),
       password: faker.internet.password(),
       college_register: faker.string.alphanumeric(6),
     });
 
-    await expect(
+    await expect(() =>
       sut.execute({
         fullname: faker.person.fullName(),
         username,
+        email: faker.internet.email(),
         password: faker.internet.password(),
         college_register: faker.string.alphanumeric(6),
       })
-    ).rejects.toThrowError('Username already exists');
+    ).rejects.toBeInstanceOf(UsernameAlreadyExistsError);
   });
 });

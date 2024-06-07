@@ -19,6 +19,7 @@ describe('Find User By Id Service', () => {
       fullname: faker.person.fullName(),
       username: faker.internet.userName(),
       password: faker.internet.password(),
+      email: faker.internet.email(),
       college_register: faker.string.alphanumeric(6),
     });
 
