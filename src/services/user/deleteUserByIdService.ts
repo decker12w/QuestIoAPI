@@ -10,13 +10,18 @@ export class DeleteUserByIdService {
   ) {}
 
   async execute({ id }: ParamsIdInput): Promise<UserOutput> {
+    const user = await this.findUserById(id);
+    await this.usersRepository.delete(id);
+
+    return user;
+  }
+
+  private async findUserById(id: number) {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new UserNotFoundError();
     }
-
-    await this.usersRepository.delete(id);
 
     return user;
   }

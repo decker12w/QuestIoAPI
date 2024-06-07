@@ -1,5 +1,5 @@
-import { UserNotFoundError } from '@/services/errors/UserNotFoundError';
 import { UpdateUserByIdService } from '@/services/user/updateUserByIdService';
+import { handleError } from '@/utils/functions/handleError';
 import {
   ParamsIdInput,
   UpdateUserInput,
@@ -28,13 +28,21 @@ export class UpdateUserByIdController {
     const { id } = paramsIdSchema.parse(request.params);
 
     try {
-      const user = await this.updateUserByIdService.execute({ id, ...data });
-      return reply.status(200).send(user);
+      this.updated(reply, data, id);
     } catch (error) {
-      if (error instanceof UserNotFoundError) {
-        return reply.status(404).send({ message: error.message });
-      }
-      throw error;
+      handleError(reply, error);
     }
+  }
+
+  private async updated(
+    reply: FastifyReply,
+    userData: UpdateUserInput,
+    userId: number
+  ) {
+    const user = await this.updateUserByIdService.execute({
+      id: userId,
+      ...userData,
+    });
+    return reply.status(200).send(user);
   }
 }

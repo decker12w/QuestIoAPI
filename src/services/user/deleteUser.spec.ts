@@ -17,6 +17,7 @@ describe('Delete User Service ', () => {
   it('should be able to delete a user', async () => {
     const userMock = await usersRepository.create({
       fullname: faker.person.fullName(),
+      email: faker.internet.email(),
       username: faker.internet.userName(),
       password: faker.internet.password(),
       college_register: faker.string.alphanumeric(6),

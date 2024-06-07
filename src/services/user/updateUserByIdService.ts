@@ -10,40 +10,73 @@ export class UpdateUserByIdService {
     @inject('UsersRepository') private usersRepository: UsersRepository
   ) {}
 
-  async execute({
-    id,
-    fullname,
-    username,
-    email,
-    password,
-    college_register,
-    user_role,
-    account_status,
-    xp_count,
-  }: UpdateUserService): Promise<UserOutput> {
-    const updatedUser = await this.usersRepository.findById(id);
+  async execute(updateData: UpdateUserService): Promise<UserOutput> {
+    const {
+      id,
+      fullname,
+      username,
+      email,
+      password,
+      college_register,
+      user_role,
+      account_status,
+      xp_count,
+    } = updateData;
+    const user = await this.findUserById(id);
 
-    if (!updatedUser) {
+    await this.updateUserFields(user, {
+      fullname,
+      username,
+      email,
+      password,
+      college_register,
+      user_role,
+      account_status,
+      xp_count,
+    });
+    await this.usersRepository.update(id, user);
+
+    return user;
+  }
+
+  private async findUserById(id: number) {
+    const user = await this.usersRepository.findById(id);
+    if (!user) {
       throw new UserNotFoundError();
     }
+    return user;
+  }
 
-    updatedUser.fullname = fullname ?? updatedUser.fullname;
-    updatedUser.username = username ?? updatedUser.username;
-    updatedUser.email = email ?? updatedUser.email;
+  private async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 6);
+  }
+
+  private async updateUserFields(
+    user: UserOutput,
+    updateData: Partial<UpdateUserService>
+  ): Promise<void> {
+    const {
+      fullname,
+      username,
+      email,
+      password,
+      college_register,
+      user_role,
+      account_status,
+      xp_count,
+    } = updateData;
+
+    user.fullname = fullname ?? user.fullname;
+    user.username = username ?? user.username;
+    user.email = email ?? user.email;
 
     if (password) {
-      const hashedPassword = await bcrypt.hash(password, 6);
-      updatedUser.password = hashedPassword;
+      user.password = await this.hashPassword(password);
     }
 
-    updatedUser.account_status = account_status ?? updatedUser.account_status;
-    updatedUser.user_role = user_role ?? updatedUser.user_role;
-    updatedUser.xp_count = xp_count ?? updatedUser.xp_count;
-    updatedUser.college_register =
-      college_register ?? updatedUser.college_register;
-
-    await this.usersRepository.update(id, updatedUser);
-
-    return updatedUser;
+    user.account_status = account_status ?? user.account_status;
+    user.user_role = user_role ?? user.user_role;
+    user.xp_count = xp_count ?? user.xp_count;
+    user.college_register = college_register ?? user.college_register;
   }
 }

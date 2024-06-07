@@ -66,7 +66,7 @@ export class InMemoryUsersRepository implements UsersRepository {
     if (data.password && typeof data.password === 'string') {
       user.password = data.password;
     }
-    if(data.email && typeof data.email ==='string'){
+    if (data.email && typeof data.email === 'string') {
       user.email = data.email;
     }
     if (data.college_register && typeof data.college_register === 'string') {
@@ -88,6 +88,16 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async findByUsername(username: string) {
     const user = this.items.find((item) => item.username === username);
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
+
+  async findByEmail(email: string) {
+    const user = this.items.find((item) => item.email === email);
 
     if (!user) {
       return null;

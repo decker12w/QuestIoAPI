@@ -18,6 +18,7 @@ describe('Update User Service', () => {
   it('should be able to update a user', async () => {
     const userMock = await usersRepository.create({
       fullname: faker.person.fullName(),
+      email: faker.internet.email(),
       username: faker.internet.userName(),
       password: faker.internet.password(),
       xp_count: 10,
@@ -29,6 +30,7 @@ describe('Update User Service', () => {
     const updatedFullname = faker.person.fullName();
     const updatedUsername = faker.internet.userName();
     const updatedPassword = faker.internet.password();
+    const updatedEmail = faker.internet.email();
     const updatedCollegeRegister = faker.string.alphanumeric(6);
     const updatedRole = 'ADMIN';
     const updatedStatus = 'ACTIVE';
@@ -36,6 +38,7 @@ describe('Update User Service', () => {
 
     const updatedUser = await sut.execute({
       id: userMock.id,
+      email: updatedEmail,
       fullname: updatedFullname,
       username: updatedUsername,
       password: updatedPassword,
@@ -48,6 +51,7 @@ describe('Update User Service', () => {
     expect(updatedUser.id).toEqual(userMock.id);
     expect(updatedUser).not.toBeNull();
     expect(updatedUser.fullname).toBe(updatedFullname);
+    expect(updatedUser.email).toBe(updatedEmail);
     expect(updatedUser.username).toBe(updatedUsername);
     expect(await compare(updatedPassword, updatedUser.password)).toBe(true);
     expect(updatedUser.user_role).toBe(updatedRole);
@@ -61,6 +65,7 @@ describe('Update User Service', () => {
       sut.execute({
         id: 1,
         fullname: faker.person.fullName(),
+        email: faker.internet.email(),
         username: faker.internet.userName(),
         password: faker.internet.password(),
         college_register: faker.string.alphanumeric(6),
