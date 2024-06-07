@@ -17,7 +17,13 @@ export async function userRoutes(app: FastifyInstance) {
         tags: ['Users'],
         response: {
           201: $ref('UserResponseSchema'),
-          409: $errorsRef('UsernameAlreadyExistsErrorSchema'),
+          409: {
+            type: 'object',
+            oneOf: [
+              $errorsRef('EmailAlreadyExistsErrorSchema'),
+              $errorsRef('UsernameAlreadyExistsErrorSchema'),
+            ],
+          },
           400: $errorsRef('ValidationErrorSchema'),
           500: $errorsRef('InternalServerErrorSchema'),
         },
@@ -48,7 +54,10 @@ export async function userRoutes(app: FastifyInstance) {
         tags: ['Users'],
         params: $ref('paramsIdSchema'),
         response: {
-          204: $ref('UserResponseSchema'),
+          204: {
+            type: 'null', // Especifica que a resposta é nula para o status 204
+            description: 'No Content',
+          },
           404: $errorsRef('UserNotFoundErrorSchema'),
         },
       },
@@ -63,7 +72,10 @@ export async function userRoutes(app: FastifyInstance) {
         params: $ref('paramsIdSchema'),
         body: $ref('updateUserBodySchema'),
         response: {
-          200: $ref('UserResponseSchema'),
+          204: {
+            type: 'null', // Especifica que a resposta é nula para o status 204
+            description: 'No Content',
+          },
           404: $errorsRef('UserNotFoundErrorSchema'),
           400: $errorsRef('ValidationErrorSchema'),
           500: $errorsRef('InternalServerErrorSchema'),

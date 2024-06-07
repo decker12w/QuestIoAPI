@@ -1,4 +1,4 @@
-import { UpdateUserByIdService } from '@/services/user/updateUserByIdService';
+import { UpdateUserByIdService } from '@/services/user/updateUserById';
 import { handleError } from '@/utils/functions/handleError';
 import {
   ParamsIdInput,
@@ -28,7 +28,7 @@ export class UpdateUserByIdController {
     const { id } = paramsIdSchema.parse(request.params);
 
     try {
-      this.updated(reply, data, id);
+      await this.updated(reply, data, id);
     } catch (error) {
       handleError(reply, error);
     }
@@ -39,10 +39,10 @@ export class UpdateUserByIdController {
     userData: UpdateUserInput,
     userId: number
   ) {
-    const user = await this.updateUserByIdService.execute({
+    await this.updateUserByIdService.execute({
       id: userId,
       ...userData,
     });
-    return reply.status(200).send(user);
+    return reply.status(204).send();
   }
 }

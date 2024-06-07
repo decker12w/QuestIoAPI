@@ -1,14 +1,14 @@
-import { CreateUserController } from '@/http/user/controllers/createController';
-import { DeleteUserByIdController } from '@/http/user/controllers/deleteUserByIdController';
-import { GetUserByIdController } from '@/http/user/controllers/getUserByIdController';
-import { UpdateUserByIdController } from '@/http/user/controllers/updateUserByIdController';
+import { CreateUserController } from '@/http/user/controllers/createUser';
+import { DeleteUserByIdController } from '@/http/user/controllers/deleteUserById';
+import { GetUserByIdController } from '@/http/user/controllers/getUserById';
+import { UpdateUserByIdController } from '@/http/user/controllers/updateUserById';
 
 import { PrismaUsersRepository } from '@/repositories/prismaRepository/prismaUsersRepository';
 import { UsersRepository } from '@/repositories/usersRepository';
 import { CreateUserService } from '@/services/user/createUser';
-import { DeleteUserByIdService } from '@/services/user/deleteUserByIdService';
+import { DeleteUserByIdService } from '@/services/user/deleteUserById';
 import { GetUserByIdService } from '@/services/user/getUserById';
-import { UpdateUserByIdService } from '@/services/user/updateUserByIdService';
+import { UpdateUserByIdService } from '@/services/user/updateUserById';
 import { container } from 'tsyringe';
 
 //Repositories

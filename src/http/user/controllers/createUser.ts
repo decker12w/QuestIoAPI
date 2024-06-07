@@ -24,7 +24,7 @@ export class CreateUserController {
     }
   }
 
-  private created(reply: FastifyReply, user: UserOutput) {
+  private async created(reply: FastifyReply, user: UserOutput) {
     return reply.status(201).send(user);
   }
 }

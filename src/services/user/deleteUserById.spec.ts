@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { DeleteUserByIdService } from './deleteUserByIdService';
+import { DeleteUserByIdService } from './deleteUserById';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { faker } from '@faker-js/faker';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
@@ -28,7 +28,7 @@ describe('Delete User Service ', () => {
     const deletedUser = await usersRepository.findById(userMock.id);
 
     expect(deletedUser).toBeNull();
-    expect(user).toEqual(userMock);
+    expect(user).toBeUndefined();
   });
 
   it('should not be able to delete a user with wrong id', async () => {

@@ -17,7 +17,7 @@ export class GetUserByIdController {
     const { id } = paramsIdSchema.parse(request.params);
 
     try {
-      this.found(reply, id);
+      await this.found(reply, id);
     } catch (error) {
       handleError(reply, error);
     }

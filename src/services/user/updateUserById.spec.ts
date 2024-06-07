@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { UpdateUserByIdService } from './updateUserByIdService';
+import { UpdateUserByIdService } from './updateUserById';
 import { faker } from '@faker-js/faker';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
 import { compare } from 'bcryptjs';

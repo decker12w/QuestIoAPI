@@ -1,4 +1,4 @@
-import { DeleteUserByIdService } from '@/services/user/deleteUserByIdService';
+import { DeleteUserByIdService } from '@/services/user/deleteUserById';
 import { handleError } from '@/utils/functions/handleError';
 import { ParamsIdInput, paramsIdSchema } from '@/utils/schemas/user/userSchema';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -18,7 +18,7 @@ export class DeleteUserByIdController {
     const { id } = paramsIdSchema.parse(request.params);
 
     try {
-      this.deleted(reply, id);
+      await this.deleted(reply, id);
     } catch (error) {
       return handleError(reply, error);
     }

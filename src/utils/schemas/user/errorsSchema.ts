@@ -24,6 +24,12 @@ const UsernameAlreadyExistsErrorSchema = z.object({
   message: z.literal('The username already exists.'),
 });
 
+const EmailAlreadyExistsErrorSchema = z.object({
+  ...errorCore,
+  statusCode: z.literal(409),
+  errorCode: z.literal('EMAIL_ALREADY_EXISTS'),
+  message: z.literal('The email already exists.'),
+});
 const UserNotFoundErrorSchema = z.object({
   ...errorCore,
   statusCode: z.literal(404),
@@ -52,6 +58,7 @@ export const { schemas: errorsSchemas, $ref: $errorsRef } = buildJsonSchemas(
     UserNotFoundErrorSchema,
     ValidationErrorSchema,
     InternalServerErrorSchema,
+    EmailAlreadyExistsErrorSchema,
   },
   { $id: 'errorsSchemas' }
 );
