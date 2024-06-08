@@ -1,7 +1,7 @@
-import { CreateUserController } from '@/http/user/controllers/createUser';
-import { DeleteUserByIdController } from '@/http/user/controllers/deleteUserById';
-import { GetUserByIdController } from '@/http/user/controllers/getUserById';
-import { UpdateUserByIdController } from '@/http/user/controllers/updateUserById';
+import { CreateUserController } from '@/http/controllers/user/createUser';
+import { DeleteUserByIdController } from '@/http/controllers/user/deleteUserById';
+import { GetUserByIdController } from '@/http/controllers/user/getUserById';
+import { UpdateUserByIdController } from '@/http/controllers/user/updateUserById';
 
 import { PrismaUsersRepository } from '@/repositories/prismaRepository/prismaUsersRepository';
 import { UsersRepository } from '@/repositories/usersRepository';

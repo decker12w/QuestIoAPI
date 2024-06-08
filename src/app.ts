@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import fastify from 'fastify';
 import { env } from './env';
-import { userRoutes } from './http/user/user.routes';
+import { userRoutes } from './http/routes/user.routes';
 import { userSchemas } from './utils/schemas/user/userSchema';
 import { errorsSchemas } from './utils/schemas/user/errorsSchema';
 
