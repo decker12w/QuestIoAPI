@@ -1,9 +1,10 @@
 import 'reflect-metadata';
 import fastify from 'fastify';
-import { env } from './env';
 import { userRoutes } from './http/routes/user.routes';
 import { userSchemas } from './utils/schemas/user/userSchema';
 import { errorsSchemas } from './utils/schemas/user/errorsSchema';
+import { swaggerDocumentation } from './utils/docs/swaggerDocs';
+import { errorHandler } from './utils/errors/ErrorHandler/globalErrorValidation';
 
 const app = fastify({
   ajv: {
@@ -14,40 +15,7 @@ const app = fastify({
 });
 
 // Swagger
-app.register(import('@fastify/swagger'), {
-  openapi: {
-    openapi: '3.0.0',
-    info: {
-      title: 'QuestIon API Backend - Node.js',
-      description: 'Testing the Fastify swagger API',
-      version: '0.1.0',
-    },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-        description: 'Development server',
-      },
-    ],
-    tags: [
-      { name: 'Users', description: 'User related end-points' },
-      { name: 'Courses', description: 'Courses related end-points' },
-    ],
-    components: {
-      securitySchemes: {
-        apiKey: {
-          type: 'apiKey',
-          name: 'apiKey',
-          in: 'header',
-        },
-      },
-    },
-    externalDocs: {
-      url: 'https://swagger.io',
-      description: 'Find more info here',
-    },
-  },
-});
-
+app.register(import('@fastify/swagger'), swaggerDocumentation);
 app.register(import('@fastify/swagger-ui'), {
   routePrefix: '/docs',
 });
@@ -62,25 +30,6 @@ for (const schema of allSchemas) {
 app.register(userRoutes, { prefix: '/user' });
 
 // Tratamento de erros
-app.setErrorHandler((error, _, reply) => {
-  console.log('Erro capturado:', error);
-  if (error.validation) {
-    return reply.status(400).send({
-      statusCode: 400,
-      errorCode: 'VALIDATION_ERROR',
-      message: 'Validation error.',
-      details: error.validation.map((error) => error.message),
-    });
-  }
-
-  if (env.NODE_ENV !== 'production') {
-    console.error(error);
-  }
-  return reply.status(500).send({
-    statusCode: 500,
-    errorCode: 'INTERNAL_SERVER_ERROR',
-    message: 'Internal server error.',
-  });
-});
+app.setErrorHandler(errorHandler);
 
 export { app };

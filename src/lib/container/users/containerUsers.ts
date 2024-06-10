@@ -9,11 +9,18 @@ import { CreateUserService } from '@/services/user/createUser';
 import { DeleteUserByIdService } from '@/services/user/deleteUserById';
 import { GetUserByIdService } from '@/services/user/getUserById';
 import { UpdateUserByIdService } from '@/services/user/updateUserById';
+import { HashPasswordBycriptjs } from '@/utils/class/hashPassword/hashPasswordBycriptjs';
+import { HashPassword } from '@/utils/interfaces/HashPassword';
 import { container } from 'tsyringe';
 
 //Repositories
 container.register<UsersRepository>('UsersRepository', {
   useClass: PrismaUsersRepository,
+});
+
+//Dependencies
+container.register<HashPassword>('HashPassword', {
+  useClass: HashPasswordBycriptjs,
 });
 
 //Services

@@ -4,7 +4,7 @@ import {
   getUserByIdController,
   deleteUserByIdController,
   updateUserByIdController,
-} from '@/lib/container/containerUsers';
+} from '@/lib/container/users/containerUsers';
 import { $ref } from '@/utils/schemas/user/userSchema';
 import { $errorsRef } from '@/utils/schemas/user/errorsSchema';
 
