@@ -1,13 +1,14 @@
 import { UsersRepository } from '@/repositories/usersRepository';
 import { UserNotFoundError } from '../errors/UserNotFoundError';
-import bcrypt from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 import { UpdateUserService, UserOutput } from '@/utils/schemas/user/userSchema';
+import { HashPassword } from '@/utils/interfaces/HashPassword';
 
 @injectable()
 export class UpdateUserByIdService {
   constructor(
-    @inject('UsersRepository') private usersRepository: UsersRepository
+    @inject('UsersRepository') private usersRepository: UsersRepository,
+    @inject('HashPassword') private hashPassword: HashPassword
   ) {}
 
   async execute(updateData: UpdateUserService): Promise<UserOutput> {
@@ -47,10 +48,6 @@ export class UpdateUserByIdService {
     return user;
   }
 
-  private async hashPassword(password: string): Promise<string> {
-    return await bcrypt.hash(password, 6);
-  }
-
   private async updateUserFields(
     user: UserOutput,
     updateData: Partial<UpdateUserService>
@@ -71,7 +68,7 @@ export class UpdateUserByIdService {
     user.email = email ?? user.email;
 
     if (password) {
-      user.password = await this.hashPassword(password);
+      user.password = await this.hashPassword.hash(password);
     }
 
     user.account_status = account_status ?? user.account_status;

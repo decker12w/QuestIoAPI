@@ -3,14 +3,15 @@ import { UserRole, AccountStatus } from '@prisma/client';
 import { UsersRepository } from '@/repositories/usersRepository';
 import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExistsError';
 import { EmailAlreadyExistsError } from '../errors/EmailAlreadyExistsError'; // Novo erro para email
-import { hash } from 'bcryptjs';
 import { inject, injectable } from 'tsyringe';
 import { CreateUserInput, UserOutput } from '@/utils/schemas/user/userSchema';
+import { HashPassword } from '@/utils/interfaces/HashPassword';
 
 @injectable()
 export class CreateUserService {
   constructor(
-    @inject('UsersRepository') private usersRepository: UsersRepository
+    @inject('UsersRepository') private usersRepository: UsersRepository,
+    @inject('HashPassword') private hashPassword: HashPassword
   ) {}
 
   async execute(input: CreateUserInput): Promise<UserOutput> {
@@ -27,7 +28,7 @@ export class CreateUserService {
     await this.ensureUsernameDoesNotExist(username);
     await this.ensureEmailDoesNotExist(email);
 
-    const password_hash = await this.hashPassword(password);
+    const password_hash = await this.hashPassword.hash(password);
 
     const user = await this.usersRepository.create({
       fullname,
@@ -55,9 +56,5 @@ export class CreateUserService {
     if (userWithSameEmail) {
       throw new EmailAlreadyExistsError();
     }
-  }
-
-  private async hashPassword(password: string): Promise<string> {
-    return await hash(password, 6);
   }
 }

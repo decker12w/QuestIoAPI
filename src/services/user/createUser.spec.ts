@@ -4,14 +4,18 @@ import { CreateUserService } from './createUser';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { faker } from '@faker-js/faker';
 import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExistsError';
+import { HashPassword } from '@/utils/interfaces/HashPassword';
+import { HashPasswordMock } from '../../utils/mocks/hashPasswordMock';
 
 let usersRepository: InMemoryUsersRepository;
+let hashedPassword: HashPassword;
 let sut: CreateUserService;
 
 describe('Create User Service', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
-    sut = new CreateUserService(usersRepository);
+    hashedPassword = new HashPasswordMock();
+    sut = new CreateUserService(usersRepository, hashedPassword);
   });
 
   it('should be able to create a user', async () => {
