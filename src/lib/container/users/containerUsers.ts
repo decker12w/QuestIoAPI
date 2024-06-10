@@ -1,3 +1,4 @@
+import { AuthenticateController } from '@/http/controllers/user/authenticate';
 import { CreateUserController } from '@/http/controllers/user/createUser';
 import { DeleteUserByIdController } from '@/http/controllers/user/deleteUserById';
 import { GetUserByIdController } from '@/http/controllers/user/getUserById';
@@ -5,6 +6,7 @@ import { UpdateUserByIdController } from '@/http/controllers/user/updateUserById
 
 import { PrismaUsersRepository } from '@/repositories/prismaRepository/prismaUsersRepository';
 import { UsersRepository } from '@/repositories/usersRepository';
+import { AuthenticateService } from '@/services/user/authenticate';
 import { CreateUserService } from '@/services/user/createUser';
 import { DeleteUserByIdService } from '@/services/user/deleteUserById';
 import { GetUserByIdService } from '@/services/user/getUserById';
@@ -40,6 +42,10 @@ container.register<DeleteUserByIdService>('DeleteUserByIdService', {
   useClass: DeleteUserByIdService,
 });
 
+container.register<AuthenticateService>('AuthenticateService', {
+  useClass: AuthenticateService,
+});
+
 //Controllers
 container.register<CreateUserController>('CreateUserController', {
   useClass: CreateUserController,
@@ -57,6 +63,10 @@ container.register<DeleteUserByIdController>('DeleteUserByIdController', {
   useClass: DeleteUserByIdController,
 });
 
+container.register<AuthenticateController>('AuthenticateController', {
+  useClass: AuthenticateController,
+});
+
 // Resolve
 const createUserController = container.resolve<CreateUserController>(
   'CreateUserController'
@@ -72,9 +82,14 @@ const deleteUserByIdController = container.resolve<DeleteUserByIdController>(
   'DeleteUserByIdController'
 );
 
+const authenticateController = container.resolve<AuthenticateController>(
+  'AuthenticateController'
+);
+
 export {
   createUserController,
   getUserByIdController,
   updateUserByIdController,
   deleteUserByIdController,
+  authenticateController,
 };

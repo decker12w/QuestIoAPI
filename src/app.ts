@@ -3,8 +3,10 @@ import fastify from 'fastify';
 import { userRoutes } from './http/routes/user.routes';
 import { userSchemas } from './utils/schemas/user/userSchema';
 import { errorsSchemas } from './utils/schemas/user/errorsSchema';
-import { swaggerDocumentation } from './utils/docs/swaggerDocs';
+import { swaggerDocumentation } from './utils/docs/swagger/swaggerDocs';
 import { errorHandler } from './utils/errors/ErrorHandler/globalErrorValidation';
+import fastifyJwt from '@fastify/jwt';
+import { env } from './env';
 
 const app = fastify({
   ajv: {
@@ -25,6 +27,11 @@ const allSchemas = [...userSchemas, ...errorsSchemas];
 for (const schema of allSchemas) {
   app.addSchema(schema);
 }
+
+//JWT
+app.register(fastifyJwt, {
+  secret: env.API_KEY,
+});
 
 // Registro das rotas
 app.register(userRoutes, { prefix: '/user' });
