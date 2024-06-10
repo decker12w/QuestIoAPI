@@ -1,87 +1,30 @@
 import { FastifyInstance } from 'fastify';
 import {
-  createUserController,
   getUserByIdController,
   deleteUserByIdController,
   updateUserByIdController,
 } from '@/lib/container/users/containerUsers';
-import { $ref } from '@/utils/schemas/user/userSchema';
-import { $errorsRef } from '@/utils/schemas/user/errorsSchema';
+import { verifyJWT } from '../middlewares/verify-jwt';
+import { getUserByIdDocs } from '@/utils/docs/swagger/usersDocs.ts/getUserById';
+import { updateUserByIdDocs } from '@/utils/docs/swagger/usersDocs.ts/updateUserById';
+import { deleteUserByIdDocs } from '@/utils/docs/swagger/usersDocs.ts/deleteUserById';
 
 export async function userRoutes(app: FastifyInstance) {
-  app.post(
-    '/create',
-    {
-      schema: {
-        body: $ref('createUserBodySchema'),
-        tags: ['Users'],
-        response: {
-          201: $ref('UserResponseSchema'),
-          409: {
-            type: 'object',
-            oneOf: [
-              $errorsRef('EmailAlreadyExistsErrorSchema'),
-              $errorsRef('UsernameAlreadyExistsErrorSchema'),
-            ],
-          },
-          400: $errorsRef('ValidationErrorSchema'),
-          500: $errorsRef('InternalServerErrorSchema'),
-        },
-      },
-    },
+  app.addHook('preHandler', verifyJWT);
 
-    createUserController.handle.bind(createUserController)
-  );
   app.get(
     '/:id',
-    {
-      schema: {
-        tags: ['Users'],
-        params: $ref('paramsIdSchema'),
-        response: {
-          200: $ref('UserResponseSchema'),
-          404: $errorsRef('UserNotFoundErrorSchema'),
-          500: $errorsRef('InternalServerErrorSchema'),
-        },
-      },
-    },
+    getUserByIdDocs,
     getUserByIdController.handle.bind(getUserByIdController)
   );
   app.delete(
     '/delete/:id',
-    {
-      schema: {
-        tags: ['Users'],
-        params: $ref('paramsIdSchema'),
-        response: {
-          204: {
-            type: 'null', // Especifica que a resposta é nula para o status 204
-            description: 'No Content',
-          },
-          404: $errorsRef('UserNotFoundErrorSchema'),
-        },
-      },
-    },
+    deleteUserByIdDocs,
     deleteUserByIdController.handle.bind(deleteUserByIdController)
   );
   app.put(
     '/update/:id',
-    {
-      schema: {
-        tags: ['Users'],
-        params: $ref('paramsIdSchema'),
-        body: $ref('updateUserBodySchema'),
-        response: {
-          204: {
-            type: 'null', // Especifica que a resposta é nula para o status 204
-            description: 'No Content',
-          },
-          404: $errorsRef('UserNotFoundErrorSchema'),
-          400: $errorsRef('ValidationErrorSchema'),
-          500: $errorsRef('InternalServerErrorSchema'),
-        },
-      },
-    },
+    updateUserByIdDocs,
     updateUserByIdController.handle.bind(updateUserByIdController)
   );
 }

@@ -57,12 +57,19 @@ export const authenticateInputSchema = z
   })
   .strict();
 
+export const tokenSchema = z
+  .object({
+    token: z.string(),
+  })
+  .strict();
+
 export type CreateUserInput = z.infer<typeof createUserBodySchema>;
 export type UserOutput = z.infer<typeof UserResponseSchema>;
 export type ParamsIdInput = z.infer<typeof paramsIdSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserBodySchema>;
 export type UpdateUserService = z.infer<typeof updateUserService>;
 export type AuthenticateInput = z.infer<typeof authenticateInputSchema>;
+export type TokenOutput = z.infer<typeof tokenSchema>;
 
 export const { schemas: userSchemas, $ref } = buildJsonSchemas(
   {
@@ -72,6 +79,7 @@ export const { schemas: userSchemas, $ref } = buildJsonSchemas(
     updateUserBodySchema,
     updateUserService,
     authenticateInputSchema,
+    tokenSchema,
   },
   { $id: 'userSchemas' }
 );

@@ -7,6 +7,7 @@ import { swaggerDocumentation } from './utils/docs/swagger/swaggerDocs';
 import { errorHandler } from './utils/errors/ErrorHandler/globalErrorValidation';
 import fastifyJwt from '@fastify/jwt';
 import { env } from './env';
+import { authRoutes } from './http/routes/auth.routes';
 
 const app = fastify({
   ajv: {
@@ -34,6 +35,7 @@ app.register(fastifyJwt, {
 });
 
 // Registro das rotas
+app.register(authRoutes, { prefix: '/auth' });
 app.register(userRoutes, { prefix: '/user' });
 
 // Tratamento de erros

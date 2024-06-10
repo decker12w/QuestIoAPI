@@ -1,3 +1,4 @@
+// In '@/utils/docs/swagger/usersDocs.ts/createUser.ts'
 import { $errorsRef } from '@/utils/schemas/user/errorsSchema';
 import { $ref } from '@/utils/schemas/user/userSchema';
 

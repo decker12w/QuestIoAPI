@@ -8,7 +8,7 @@ import { CreateUserInput, UserOutput } from '@/utils/schemas/user/userSchema';
 import { HashPassword } from '@/utils/interfaces/HashPassword';
 
 @injectable()
-export class CreateUserService {
+export class RegisterUserService {
   constructor(
     @inject('UsersRepository') private usersRepository: UsersRepository,
     @inject('HashPassword') private hashPassword: HashPassword
