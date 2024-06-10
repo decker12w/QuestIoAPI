@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { DeleteUserByIdService } from './deleteUserById';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { faker } from '@faker-js/faker';
-import { UserNotFoundError } from '../errors/UserNotFoundError';
+import { UserNotFoundError } from '../errors/UserNotFound';
 
 let usersRepository: InMemoryUsersRepository;
 let sut: DeleteUserByIdService;

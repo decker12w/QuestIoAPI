@@ -10,9 +10,9 @@ export const userCore = {
     required_error: 'Username is required.',
     invalid_type_error: 'Username must be a string.',
   }),
-  email:z.string({
+  email: z.string({
     required_error: 'Email is required',
-    invalid_type_error: 'Email must be a string'
+    invalid_type_error: 'Email must be a string',
   }),
   password: z.string({
     required_error: 'Password is required.',
@@ -50,11 +50,19 @@ export const paramsIdSchema = z
   })
   .strict();
 
+export const authenticateInputSchema = z
+  .object({
+    password: userCore.password,
+    email: userCore.email,
+  })
+  .strict();
+
 export type CreateUserInput = z.infer<typeof createUserBodySchema>;
 export type UserOutput = z.infer<typeof UserResponseSchema>;
 export type ParamsIdInput = z.infer<typeof paramsIdSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserBodySchema>;
 export type UpdateUserService = z.infer<typeof updateUserService>;
+export type AuthenticateInput = z.infer<typeof authenticateInputSchema>;
 
 export const { schemas: userSchemas, $ref } = buildJsonSchemas(
   {
@@ -63,6 +71,7 @@ export const { schemas: userSchemas, $ref } = buildJsonSchemas(
     paramsIdSchema,
     updateUserBodySchema,
     updateUserService,
+    authenticateInputSchema,
   },
   { $id: 'userSchemas' }
 );

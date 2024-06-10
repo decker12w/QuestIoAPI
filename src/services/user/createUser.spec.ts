@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { CreateUserService } from './createUser';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { faker } from '@faker-js/faker';
-import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExistsError';
+import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExists';
 import { HashPassword } from '@/utils/interfaces/HashPassword';
 import { HashPasswordMock } from '../../utils/mocks/hashPasswordMock';
 
