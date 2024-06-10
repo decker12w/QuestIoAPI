@@ -1,21 +1,21 @@
 import 'reflect-metadata';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { CreateUserService } from './createUser';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { faker } from '@faker-js/faker';
-import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExistsError';
+import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExists';
 import { HashPassword } from '@/utils/interfaces/HashPassword';
 import { HashPasswordMock } from '../../utils/mocks/hashPasswordMock';
+import { RegisterUserService } from './registerUser';
 
 let usersRepository: InMemoryUsersRepository;
 let hashedPassword: HashPassword;
-let sut: CreateUserService;
+let sut: RegisterUserService;
 
 describe('Create User Service', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
     hashedPassword = new HashPasswordMock();
-    sut = new CreateUserService(usersRepository, hashedPassword);
+    sut = new RegisterUserService(usersRepository, hashedPassword);
   });
 
   it('should be able to create a user', async () => {

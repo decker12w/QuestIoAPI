@@ -1,7 +1,10 @@
 import { CourseRepository } from '@/repositories/courseRepository';
-import { CourseNotFoundError } from '../errors/CourseNotFoundError';
+import { CourseNotFoundError } from '../errors/CourseNotFound';
 import { inject, injectable } from 'tsyringe';
-import { ParamsIdInput, CourseOutput } from '@/utils/schemas/course/courseSchema';
+import {
+  ParamsIdInput,
+  CourseOutput,
+} from '@/utils/schemas/course/courseSchema';
 
 @injectable()
 export class DeleteCourseByIdService {

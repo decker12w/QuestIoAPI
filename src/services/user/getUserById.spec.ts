@@ -3,7 +3,7 @@ import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMem
 import { beforeEach, describe, expect, it } from 'vitest';
 import { GetUserByIdService } from './getUserById';
 import { faker } from '@faker-js/faker';
-import { UserNotFoundError } from '../errors/UserNotFoundError';
+import { UserNotFoundError } from '../errors/UserNotFound';
 
 let usersRepository: InMemoryUsersRepository;
 let sut: GetUserByIdService;

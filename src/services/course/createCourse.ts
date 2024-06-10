@@ -1,8 +1,11 @@
 // services/user/createUser.ts
 import { CourseRepository } from '@/repositories/courseRepository';
-import { CourseAlreadyExistsError } from '../errors/CourseAlreadyExistsError';
+import { CourseAlreadyExistsError } from '../errors/CourseAlreadyExists';
 import { inject, injectable } from 'tsyringe';
-import { CreateCourseInput, CourseOutput } from '@/utils/schemas/course/courseSchema';
+import {
+  CreateCourseInput,
+  CourseOutput,
+} from '@/utils/schemas/course/courseSchema';
 
 @injectable()
 export class CreateUserService {
@@ -14,9 +17,7 @@ export class CreateUserService {
     name,
     description,
   }: CreateCourseInput): Promise<CourseOutput> {
-
-    const CourseWithSameName =
-      await this.courseRepository.findByName(name);
+    const CourseWithSameName = await this.courseRepository.findByName(name);
 
     if (CourseWithSameName) {
       throw new CourseAlreadyExistsError();
@@ -24,7 +25,7 @@ export class CreateUserService {
 
     const course = await this.courseRepository.create({
       name,
-      description
+      description,
     });
 
     return course;
