@@ -19,7 +19,7 @@ export async function authRoutes(app: FastifyInstance) {
     {
       schema: {
         body: $ref('createUserBodySchema'),
-        tags: ['Users'],
+        tags: ['Auth'],
         response: {
           201: $ref('UserResponseSchema'),
           409: {
