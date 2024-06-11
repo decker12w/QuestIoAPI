@@ -5,7 +5,7 @@ import { $ref } from '@/utils/schemas/user/userSchema';
 export const createUserDocs = {
   schema: {
     body: $ref('authenticateInputSchema'),
-    tags: ['Users'],
+    tags: ['Auth'],
     response: {
       200: $ref('tokenSchema'),
       400: {

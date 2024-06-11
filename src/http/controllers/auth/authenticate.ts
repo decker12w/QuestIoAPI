@@ -31,6 +31,7 @@ export class AuthenticateController {
           },
         }
       );
+
       return reply.status(200).send({ token });
     } catch (error) {
       return handleError(reply, error);

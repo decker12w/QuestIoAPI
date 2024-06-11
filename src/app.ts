@@ -29,6 +29,9 @@ for (const schema of allSchemas) {
 //JWT
 app.register(fastifyJwt, {
   secret: env.API_KEY,
+  sign: {
+    expiresIn: '10m',
+  },
 });
 
 // Registro das rotas
