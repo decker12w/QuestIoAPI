@@ -4,7 +4,7 @@ import { $ref } from '@/utils/schemas/user/userSchema';
 export const authenticateDocs = {
   schema: {
     body: $ref('authenticateInputSchema'),
-    tags: ['Users'],
+    tags: ['Auth'],
     response: {
       200: $ref('tokenSchema'),
       400: {
