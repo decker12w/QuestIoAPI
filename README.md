@@ -57,17 +57,17 @@ npm i
   - Testes unitários
 
     ```bash
-        npm run test
+    npm run test
     ```
 
   - Testes e2e
 
     ```bash
-        npm run test:e2e
+    npm run test:e2e
     ```
 
   - Todos os testes
 
     ```bash
-        npm run test:all
+    npm run test:all
     ```
