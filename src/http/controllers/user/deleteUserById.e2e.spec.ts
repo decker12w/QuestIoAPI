@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { app } from '@/app';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
-import { faker } from '@faker-js/faker';
+import { createAndAuthenticateUser } from '@/utils/test/createAndAuthenticateUser';
 
 describe('Delete User By Id Controller', () => {
   beforeAll(async () => {
@@ -12,21 +12,12 @@ describe('Delete User By Id Controller', () => {
   afterAll(async () => {
     await app.close();
   });
-  it('should be able to delete a user by id', async () => {
-    await request(app.server)
-      .post('/user/create')
-      .send({
-        fullname: faker.person.fullName(),
-        username: faker.internet.userName(),
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-        college_register: faker.string.alphanumeric(6),
-        user_role: 'USER',
-        account_status: 'ACTIVE',
-      });
 
+  it('should be able to delete a user by id', async () => {
+    const { token } = await createAndAuthenticateUser(app);
     const deleteResponse = await request(app.server)
       .delete('/user/delete/1')
+      .set('Authorization', `Bearer ${token}`)
       .send();
 
     expect(deleteResponse.statusCode).toEqual(204);

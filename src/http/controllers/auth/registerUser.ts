@@ -1,13 +1,14 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CreateUserService } from '@/services/user/createUser';
+import { RegisterUserService } from '@/services/user/registerUser';
 import { inject, injectable } from 'tsyringe';
 import { CreateUserInput, UserOutput } from '@/utils/schemas/user/userSchema';
 import { handleError } from '@/utils/functions/handleError';
 
 @injectable()
-export class CreateUserController {
+export class RegisterUserController {
   constructor(
-    @inject('CreateUserService') private createUserService: CreateUserService
+    @inject('RegisterUserService')
+    private registerUserService: RegisterUserService
   ) {}
 
   async handle(
@@ -17,7 +18,7 @@ export class CreateUserController {
     const data = request.body;
 
     try {
-      const user = await this.createUserService.execute(data);
+      const user = await this.registerUserService.execute(data);
       return this.created(reply, user);
     } catch (error) {
       return handleError(reply, error);

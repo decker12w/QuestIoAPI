@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { faker } from '@faker-js/faker';
 
-describe('Create User Controller', () => {
+describe('Register User Controller', () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -12,9 +12,9 @@ describe('Create User Controller', () => {
   afterAll(async () => {
     await app.close();
   });
-  it('should be able to create a user', async () => {
+  it('should be able to register a user', async () => {
     const response = await request(app.server)
-      .post('/user/create')
+      .post('/auth/register')
       .send({
         fullname: faker.person.fullName(),
         username: faker.internet.userName(),
