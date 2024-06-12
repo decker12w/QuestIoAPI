@@ -17,7 +17,8 @@
     "prepare": "husky",
     "lint": "eslint src --fix --config .eslintrc.cjs",
     "lintAndFormat": "npm run lint && npm run format",
-    "format": "prettier --write src/**/*.ts"
+    "format": "prettier --write src/**/*.ts",
+    "migrations": "npx prisma migrate dev && npx prisma generate"
   },
   "keywords": [],
   "author": "",
