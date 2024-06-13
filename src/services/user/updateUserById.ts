@@ -1,5 +1,5 @@
 import { UsersRepository } from '@/repositories/usersRepository';
-import { UserNotFoundError } from '../errors/UserNotFound';
+import { UserNotFoundError } from '../@errors/UserNotFound';
 import { inject, injectable } from 'tsyringe';
 import { UpdateUserService, UserOutput } from '@/utils/schemas/user/userSchema';
 import { HashPassword } from '@/utils/interfaces/HashPassword';

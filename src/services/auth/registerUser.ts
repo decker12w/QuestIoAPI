@@ -1,8 +1,8 @@
 // services/user/createUser.ts
 import { UserRole, AccountStatus } from '@prisma/client';
 import { UsersRepository } from '@/repositories/usersRepository';
-import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExists';
-import { EmailAlreadyExistsError } from '../errors/EmailAlreadyExists'; // Novo erro para email
+import { UsernameAlreadyExistsError } from '../@errors/UsernameAlreadyExists';
+import { EmailAlreadyExistsError } from '../@errors/EmailAlreadyExists'; // Novo erro para email
 import { inject, injectable } from 'tsyringe';
 import { CreateUserInput, UserOutput } from '@/utils/schemas/user/userSchema';
 import { HashPassword } from '@/utils/interfaces/HashPassword';

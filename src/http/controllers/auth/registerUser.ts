@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { RegisterUserService } from '@/services/user/registerUser';
+import { RegisterUserService } from '@/services/auth/registerUser';
 import { inject, injectable } from 'tsyringe';
 import { CreateUserInput, UserOutput } from '@/utils/schemas/user/userSchema';
 import { handleError } from '@/utils/functions/handleError';

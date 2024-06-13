@@ -8,6 +8,7 @@ import fastifyJwt from '@fastify/jwt';
 import { env } from './env';
 import { authRoutes } from './http/routes/auth.routes';
 import { swaggerDocumentation } from './utils/docs/swagger/swaggerDocs';
+import fastifyCookie from '@fastify/cookie';
 
 const app = fastify({
   ajv: {
@@ -29,6 +30,19 @@ for (const schema of allSchemas) {
 //JWT
 app.register(fastifyJwt, {
   secret: env.API_KEY,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m',
+  },
+});
+app.register(fastifyCookie);
+
+//health check
+app.get('/health', async () => {
+  return { status: 'ok' };
 });
 
 // Registro das rotas

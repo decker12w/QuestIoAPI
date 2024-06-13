@@ -1,5 +1,5 @@
 import { CourseRepository } from '@/repositories/courseRepository';
-import { CourseNotFoundError } from '../errors/CourseNotFound';
+import { CourseNotFoundError } from '../@errors/CourseNotFound';
 import { inject, injectable } from 'tsyringe';
 import {
   UpdateCourseService,
