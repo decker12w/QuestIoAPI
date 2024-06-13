@@ -24,6 +24,20 @@ model User {
   entry_type       DateTime      @default(now())
   account_status   AccountStatus @default(ACTIVE)
   xp_count         Int           @default(0)
+
+  // Adicionando a relação inversa
+  refreshTokens RefreshToken[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Course {

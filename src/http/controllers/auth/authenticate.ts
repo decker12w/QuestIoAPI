@@ -1,4 +1,4 @@
-import { AuthenticateService } from '@/services/user/authenticate';
+import { AuthenticateService } from '@/services/auth/authenticate';
 import { handleError } from '@/utils/functions/handleError';
 import {
   AuthenticateInput,
@@ -32,7 +32,25 @@ export class AuthenticateController {
         }
       );
 
-      return reply.status(200).send({ token });
+      const refreshToken = await reply.jwtSign(
+        {},
+        {
+          sign: {
+            sub: user.id.toString(),
+            expiresIn: '7d',
+          },
+        }
+      );
+
+      return reply
+        .setCookie('refreshToken', refreshToken, {
+          path: '/',
+          secure: true,
+          sameSite: true,
+          httpOnly: true,
+        })
+        .status(200)
+        .send({ token });
     } catch (error) {
       return handleError(reply, error);
     }

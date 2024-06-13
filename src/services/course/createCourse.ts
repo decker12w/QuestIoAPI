@@ -1,6 +1,6 @@
 // services/user/createUser.ts
 import { CourseRepository } from '@/repositories/courseRepository';
-import { CourseAlreadyExistsError } from '../errors/CourseAlreadyExists';
+import { CourseAlreadyExistsError } from '../@errors/CourseAlreadyExists';
 import { inject, injectable } from 'tsyringe';
 import {
   CreateCourseInput,

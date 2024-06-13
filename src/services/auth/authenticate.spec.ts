@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { AuthenticateService } from './authenticate';
 import { HashPassword } from '@/utils/interfaces/HashPassword';
 import { faker } from '@faker-js/faker';
-import { InvalidCredencialsError } from '../errors/InvalidCredencials';
+import { InvalidCredencialsError } from '../@errors/InvalidCredencials';
 
 let usersRepository: InMemoryUsersRepository;
 let hashedPassword: HashPassword;

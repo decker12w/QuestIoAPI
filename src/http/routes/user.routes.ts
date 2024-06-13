@@ -14,17 +14,17 @@ export async function userRoutes(app: FastifyInstance) {
 
   app.get(
     '/:id',
-    getUserByIdDocs,
+    { schema: getUserByIdDocs },
     getUserByIdController.handle.bind(getUserByIdController)
   );
   app.delete(
     '/delete/:id',
-    deleteUserByIdDocs,
+    { schema: deleteUserByIdDocs },
     deleteUserByIdController.handle.bind(deleteUserByIdController)
   );
   app.put(
     '/update/:id',
-    updateUserByIdDocs,
+    { schema: updateUserByIdDocs },
     updateUserByIdController.handle.bind(updateUserByIdController)
   );
 }

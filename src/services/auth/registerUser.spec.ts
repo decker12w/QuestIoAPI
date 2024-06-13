@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InMemoryUsersRepository } from '@/repositories/InMemoryRepository/InMemoryUsersRepository';
 import { faker } from '@faker-js/faker';
-import { UsernameAlreadyExistsError } from '../errors/UsernameAlreadyExists';
+import { UsernameAlreadyExistsError } from '../@errors/UsernameAlreadyExists';
 import { HashPassword } from '@/utils/interfaces/HashPassword';
 import { HashPasswordMock } from '../../utils/mocks/hashPasswordMock';
 import { RegisterUserService } from './registerUser';

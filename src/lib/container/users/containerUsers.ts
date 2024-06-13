@@ -7,10 +7,10 @@ import { UpdateUserByIdController } from '@/http/controllers/user/updateUserById
 
 import { PrismaUsersRepository } from '@/repositories/prismaRepository/prismaUsersRepository';
 import { UsersRepository } from '@/repositories/usersRepository';
-import { AuthenticateService } from '@/services/user/authenticate';
+import { AuthenticateService } from '@/services/auth/authenticate';
 import { DeleteUserByIdService } from '@/services/user/deleteUserById';
 import { GetUserByIdService } from '@/services/user/getUserById';
-import { RegisterUserService } from '@/services/user/registerUser';
+import { RegisterUserService } from '@/services/auth/registerUser';
 import { UpdateUserByIdService } from '@/services/user/updateUserById';
 import { HashPasswordBycriptjs } from '@/utils/class/hashPassword/hashPasswordBycriptjs';
 import { HashPassword } from '@/utils/interfaces/HashPassword';
