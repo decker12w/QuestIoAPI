@@ -1,13 +1,13 @@
 import { FastifyInstance } from 'fastify';
-import {
-  getUserByIdController,
-  deleteUserByIdController,
-  updateUserByIdController,
-} from '@/lib/container/users/containerUsers';
 import { verifyJWT } from '../middlewares/verify-jwt';
-import { getUserByIdDocs } from '@/utils/docs/swagger/usersDocs.ts/getUserById';
-import { updateUserByIdDocs } from '@/utils/docs/swagger/usersDocs.ts/updateUserById';
-import { deleteUserByIdDocs } from '@/utils/docs/swagger/usersDocs.ts/deleteUserById';
+import { getUserByIdDocs } from '@/utils/docs/swagger/usersDocs/getUserById';
+import { updateUserByIdDocs } from '@/utils/docs/swagger/usersDocs/updateUserById';
+import { deleteUserByIdDocs } from '@/utils/docs/swagger/usersDocs/deleteUserById';
+import {
+  deleteUserByIdController,
+  getUserByIdController,
+  updateUserByIdController,
+} from '@/lib/container/resolveDependency';
 
 export async function userRoutes(app: FastifyInstance) {
   app.addHook('preHandler', verifyJWT);

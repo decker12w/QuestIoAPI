@@ -1,10 +1,9 @@
-import 'reflect-metadata';
 import { app } from '@/app';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { faker } from '@faker-js/faker';
 
-describe('Refresh User Controller e2e', () => {
+describe('Logout User Controller e2e', () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -12,7 +11,8 @@ describe('Refresh User Controller e2e', () => {
   afterAll(async () => {
     await app.close();
   });
-  it('should be able to refresh a token', async () => {
+
+  it('should be able to logout a user', async () => {
     const email = faker.internet.email();
     const password = faker.internet.password();
 
@@ -38,14 +38,13 @@ describe('Refresh User Controller e2e', () => {
     const cookies = authresponse.get('Set-Cookie') as string[];
 
     const response = await request(app.server)
-      .patch('/auth/token/refresh')
+      .post('/auth/logout')
       .set('Cookie', cookies)
       .send();
 
     expect(response.statusCode).toEqual(200);
-    expect(response.body).toEqual({ token: expect.any(String) });
-    expect(response.get('Set-Cookie')).toEqual([
-      expect.stringContaining('refreshToken='),
-    ]);
+    expect(response.body).toEqual(
+      expect.objectContaining({ message: 'Logout successful' })
+    );
   });
 });
