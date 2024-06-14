@@ -8,7 +8,7 @@ import {
 } from '@/utils/schemas/course/courseSchema';
 
 @injectable()
-export class CreateUserService {
+export class CreateCourseService {
   constructor(
     @inject('CourseRepository') private courseRepository: CourseRepository
   ) {}
