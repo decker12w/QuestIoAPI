@@ -1,4 +1,5 @@
 import { AuthenticateService } from '@/services/auth/authenticate';
+import { CreateRefreshTokenService } from '@/services/refreshToken/createToken';
 import { handleError } from '@/utils/functions/handleError';
 import {
   AuthenticateInput,
@@ -11,7 +12,9 @@ import { inject, injectable } from 'tsyringe';
 export class AuthenticateController {
   constructor(
     @inject('AuthenticateService')
-    private authenticateService: AuthenticateService
+    private authenticateService: AuthenticateService,
+    @inject('CreateRefreshTokenService')
+    private createRefreshTokenService: CreateRefreshTokenService
   ) {}
 
   async authenticate(
@@ -41,6 +44,12 @@ export class AuthenticateController {
           },
         }
       );
+
+      this.createRefreshTokenService.execute({
+        userId: user.id,
+        token: refreshToken,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      });
 
       return reply
         .setCookie('refreshToken', refreshToken, {
