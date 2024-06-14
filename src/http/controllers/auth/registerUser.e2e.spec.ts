@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import request from 'supertest';
 import { faker } from '@faker-js/faker';
 
-describe('Register User Controller', () => {
+describe('Register User Controller e2e', () => {
   beforeAll(async () => {
     await app.ready();
   });

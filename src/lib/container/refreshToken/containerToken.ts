@@ -5,7 +5,6 @@ import { FetchRefreshTokenService } from '@/services/refreshToken/fetchRefreshTo
 import { InvalidateRefreshTokenService } from '@/services/refreshToken/invalidateToken';
 import { UpdateRefreshTokenService } from '@/services/refreshToken/updateRefreshToken';
 import { VerifyRefreshTokenService } from '@/services/refreshToken/verifyToken';
-
 import { container } from 'tsyringe';
 
 //Repositories
@@ -14,6 +13,10 @@ container.register<RefreshTokensRepository>('RefreshTokensRepository', {
 });
 
 //Services
+container.register<VerifyRefreshTokenService>('VerifyRefreshTokenService', {
+  useClass: VerifyRefreshTokenService,
+});
+
 container.register<CreateRefreshTokenService>('CreateRefreshTokenService', {
   useClass: CreateRefreshTokenService,
 });
@@ -28,10 +31,6 @@ container.register<InvalidateRefreshTokenService>(
     useClass: InvalidateRefreshTokenService,
   }
 );
-
-container.register<VerifyRefreshTokenService>('VerifyRefreshTokenService', {
-  useClass: VerifyRefreshTokenService,
-});
 
 container.register<UpdateRefreshTokenService>('UpdateRefreshTokenService', {
   useClass: UpdateRefreshTokenService,

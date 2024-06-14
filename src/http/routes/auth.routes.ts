@@ -1,10 +1,12 @@
 import {
   authenticateController,
+  logoutController,
+  refreshTokenController,
   registerUserController,
-} from '@/lib/container/users/containerUsers';
+} from '@/lib/container/resolveDependency';
 import { authenticateDocs } from '@/utils/docs/swagger/usersDocs.ts/authenticate';
 import { createUserDocs } from '@/utils/docs/swagger/usersDocs.ts/createUser';
-import { refreshTokenController } from '@/lib/container/auth/containerAuth';
+
 import { FastifyInstance } from 'fastify';
 
 export async function authRoutes(app: FastifyInstance) {
@@ -17,7 +19,7 @@ export async function authRoutes(app: FastifyInstance) {
   );
   app.patch(
     '/token/refresh',
-    refreshTokenController.refresh.bind(authenticateController)
+    refreshTokenController.refresh.bind(refreshTokenController)
   );
   app.post(
     '/register',
@@ -26,5 +28,10 @@ export async function authRoutes(app: FastifyInstance) {
     },
 
     registerUserController.handle.bind(registerUserController)
+  );
+  app.post(
+    '/logout',
+
+    logoutController.logout.bind(logoutController)
   );
 }
