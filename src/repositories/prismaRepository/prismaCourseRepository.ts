@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { CourseRepository } from '../courseRepository';
 
-export class PrismaUsersRepository implements CourseRepository {
+export class PrismaCourseRepository implements CourseRepository {
   findByName(name: string) {
     return prisma.course.findFirst({
       where: { name },
