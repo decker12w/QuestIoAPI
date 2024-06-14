@@ -1,9 +1,10 @@
 import { UsersRepository } from '@/repositories/usersRepository';
-import { AuthenticateInput, UserOutput } from '@/utils/schemas/user/userSchema';
+import { UserOutput } from '@/utils/schemas/user/userSchema';
 import { injectable, inject } from 'tsyringe';
 import { HashPassword } from '@/utils/interfaces/HashPassword';
 import { InvalidCredencialsError } from '../@errors/InvalidCredencials';
 import { User } from '@prisma/client';
+import { AuthenticateInput } from '@/utils/schemas/auth/authSchema';
 
 @injectable()
 export class AuthenticateService {

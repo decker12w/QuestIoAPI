@@ -9,6 +9,9 @@ import { env } from './env';
 import { authRoutes } from './http/routes/auth.routes';
 import { swaggerDocumentation } from './utils/docs/swagger/swaggerDocs';
 import fastifyCookie from '@fastify/cookie';
+import { errorsAuthSchemas } from './utils/schemas/auth/errorsSchema';
+import { errorsRefreshTokenSchemas } from './utils/schemas/refreshToken/errorsSchema';
+import { authSchemas } from './utils/schemas/auth/authSchema';
 
 const app = fastify({
   ajv: {
@@ -22,7 +25,13 @@ const app = fastify({
 swaggerDocumentation(app);
 
 // Adição dos schemas
-const allSchemas = [...userSchemas, ...errorsSchemas];
+const allSchemas = [
+  ...userSchemas,
+  ...authSchemas,
+  ...errorsSchemas,
+  ...errorsAuthSchemas,
+  ...errorsRefreshTokenSchemas,
+];
 for (const schema of allSchemas) {
   app.addSchema(schema);
 }

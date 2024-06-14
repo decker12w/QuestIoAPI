@@ -2,7 +2,7 @@
 import { $errorsRef } from '@/utils/schemas/user/errorsSchema';
 import { $ref } from '@/utils/schemas/user/userSchema';
 
-export const createUserDocs = {
+export const registerUserDocs = {
   body: $ref('createUserBodySchema'),
   tags: ['Auth'],
   response: {

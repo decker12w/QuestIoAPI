@@ -4,7 +4,8 @@ import { handleError } from '@/utils/functions/handleError';
 import {
   AuthenticateInput,
   authenticateInputSchema,
-} from '@/utils/schemas/user/userSchema';
+} from '@/utils/schemas/auth/authSchema';
+
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { inject, injectable } from 'tsyringe';
 
