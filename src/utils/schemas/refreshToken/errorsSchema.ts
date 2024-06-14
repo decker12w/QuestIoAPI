@@ -24,9 +24,12 @@ const InvalidTokenErrorSchema = z.object({
   message: z.literal('Invalid token.'),
 });
 
-export const { schemas: errorsSchemas, $ref: $errorsRef } = buildJsonSchemas(
+export const {
+  schemas: errorsRefreshTokenSchemas,
+  $ref: $errorsRefreshTokenRef,
+} = buildJsonSchemas(
   {
     InvalidTokenErrorSchema,
   },
-  { $id: 'errorsSchemas' }
+  { $id: 'errorsRefreshTokenSchemas' }
 );

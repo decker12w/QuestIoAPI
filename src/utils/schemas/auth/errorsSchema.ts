@@ -24,9 +24,33 @@ const NoCookieErrorSchema = z.object({
   message: z.literal('No cookie error.'),
 });
 
-export const { schemas: errorsSchemas, $ref: $errorsRef } = buildJsonSchemas(
-  {
-    NoCookieErrorSchema,
-  },
-  { $id: 'errorsSchemas' }
-);
+const InvalidCredencialsErrorSchema = z.object({
+  ...errorCore,
+  statusCode: z.literal(400),
+  errorCode: z.literal('INVALID_CREDENTIALS'),
+  message: z.literal('invalid credentials.'),
+});
+
+const ResourceNotFoundErrorSchema = z.object({
+  ...errorCore,
+  statusCode: z.literal(404),
+  errorCode: z.literal('RESOURCE_NOT_FOUND'),
+  message: z.literal('resource not found.'),
+});
+
+export const unauthorizedErrorSchema = z.object({
+  statusCode: z.literal(401),
+  errorCode: z.literal('UNAUTHORIZED'),
+  message: z.literal('Unauthorized'),
+});
+
+export const { schemas: errorsAuthSchemas, $ref: $errorsAuthRef } =
+  buildJsonSchemas(
+    {
+      ResourceNotFoundErrorSchema,
+      NoCookieErrorSchema,
+      InvalidCredencialsErrorSchema,
+      unauthorizedErrorSchema,
+    },
+    { $id: 'errorsAuthSchemas' }
+  );

@@ -4,34 +4,34 @@ import {
   refreshTokenController,
   registerUserController,
 } from '@/lib/container/resolveDependency';
-import { authenticateDocs } from '@/utils/docs/swagger/usersDocs.ts/authenticate';
-import { createUserDocs } from '@/utils/docs/swagger/usersDocs.ts/createUser';
+import { authenticateDocs } from '@/utils/docs/swagger/authDocs/authenticate';
+import { logoutDocs } from '@/utils/docs/swagger/authDocs/logout';
+import { refreshTokenDocs } from '@/utils/docs/swagger/authDocs/refreshToken';
+import { registerUserDocs } from '@/utils/docs/swagger/authDocs/registerUser';
 
 import { FastifyInstance } from 'fastify';
+import { verifyJWT } from '../middlewares/verify-jwt';
 
 export async function authRoutes(app: FastifyInstance) {
   app.post(
     '/signin',
-    {
-      schema: authenticateDocs,
-    },
+    { schema: authenticateDocs },
     authenticateController.authenticate.bind(authenticateController)
-  );
-  app.patch(
-    '/token/refresh',
-    refreshTokenController.refresh.bind(refreshTokenController)
   );
   app.post(
     '/register',
-    {
-      schema: createUserDocs,
-    },
-
+    { schema: registerUserDocs },
     registerUserController.handle.bind(registerUserController)
   );
+  app.patch(
+    '/token/refresh',
+    { schema: refreshTokenDocs, preHandler: verifyJWT },
+    refreshTokenController.refresh.bind(refreshTokenController)
+  );
+
   app.post(
     '/logout',
-
+    { schema: logoutDocs, preHandler: verifyJWT },
     logoutController.logout.bind(logoutController)
   );
 }

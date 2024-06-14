@@ -45,13 +45,6 @@ const ValidationErrorSchema = z.object({
   details: z.array(z.string()).optional(),
 });
 
-const InvalidCredencialsErrorSchema = z.object({
-  ...errorCore,
-  statusCode: z.literal(400),
-  errorCode: z.literal('INVALID_CREDENTIALS'),
-  message: z.literal('invalid credentials.'),
-});
-
 const InternalServerErrorSchema = z.object({
   ...errorCore,
   statusCode: z.literal(500),
@@ -62,7 +55,7 @@ const InternalServerErrorSchema = z.object({
 export const { schemas: errorsSchemas, $ref: $errorsRef } = buildJsonSchemas(
   {
     UsernameAlreadyExistsErrorSchema,
-    InvalidCredencialsErrorSchema,
+
     UserNotFoundErrorSchema,
     ValidationErrorSchema,
     InternalServerErrorSchema,
