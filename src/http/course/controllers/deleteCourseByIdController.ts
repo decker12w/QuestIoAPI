@@ -1,4 +1,4 @@
-import { CourseNotFoundError } from '@/services/errors/CourseNotFoundError';
+import { CourseNotFoundError } from '@/services/@errors/CourseNotFound';
 import { DeleteCourseByIdService } from '@/services/course/deleteCoursebyIdService';
 import { ParamsIdInput, paramsIdSchema } from '@/utils/schemas/course/courseSchema';
 import { FastifyReply, FastifyRequest } from 'fastify';

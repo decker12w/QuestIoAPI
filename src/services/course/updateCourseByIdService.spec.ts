@@ -3,7 +3,7 @@ import { InMemoryCourseRepository } from '@/repositories/InMemoryRepository/InMe
 import { beforeEach, describe, expect, it } from 'vitest';
 import { UpdateCourseByIdService } from './updateCourseByIdService';
 import { faker } from '@faker-js/faker';
-import { CourseNotFoundError } from '../errors/CourseNotFoundError';
+import { CourseNotFoundError } from '../@errors/CourseNotFound';
 
 let CoursesRepository: InMemoryCourseRepository;
 let sut: UpdateCourseByIdService;

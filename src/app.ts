@@ -1,9 +1,17 @@
 import 'reflect-metadata';
 import fastify from 'fastify';
-import { env } from './env';
-import { userRoutes } from './http/user/user.routes';
+import { userRoutes } from './http/routes/user.routes';
 import { userSchemas } from './utils/schemas/user/userSchema';
 import { errorsSchemas } from './utils/schemas/user/errorsSchema';
+import { errorHandler } from './utils/errors/ErrorHandler/globalErrorValidation';
+import fastifyJwt from '@fastify/jwt';
+import { env } from './env';
+import { authRoutes } from './http/routes/auth.routes';
+import { swaggerDocumentation } from './utils/docs/swagger/swaggerDocs';
+import fastifyCookie from '@fastify/cookie';
+import { errorsAuthSchemas } from './utils/schemas/auth/errorsSchema';
+import { errorsRefreshTokenSchemas } from './utils/schemas/refreshToken/errorsSchema';
+import { authSchemas } from './utils/schemas/auth/authSchema';
 
 const app = fastify({
   ajv: {
@@ -14,73 +22,43 @@ const app = fastify({
 });
 
 // Swagger
-app.register(import('@fastify/swagger'), {
-  openapi: {
-    openapi: '3.0.0',
-    info: {
-      title: 'QuestIon API Backend - Node.js',
-      description: 'Testing the Fastify swagger API',
-      version: '0.1.0',
-    },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-        description: 'Development server',
-      },
-    ],
-    tags: [
-      { name: 'Users', description: 'User related end-points' },
-      { name: 'Courses', description: 'Courses related end-points' },
-    ],
-    components: {
-      securitySchemes: {
-        apiKey: {
-          type: 'apiKey',
-          name: 'apiKey',
-          in: 'header',
-        },
-      },
-    },
-    externalDocs: {
-      url: 'https://swagger.io',
-      description: 'Find more info here',
-    },
-  },
-});
-
-app.register(import('@fastify/swagger-ui'), {
-  routePrefix: '/docs',
-});
+swaggerDocumentation(app);
 
 // Adição dos schemas
-const allSchemas = [...userSchemas, ...errorsSchemas];
+const allSchemas = [
+  ...userSchemas,
+  ...authSchemas,
+  ...errorsSchemas,
+  ...errorsAuthSchemas,
+  ...errorsRefreshTokenSchemas,
+];
 for (const schema of allSchemas) {
   app.addSchema(schema);
 }
 
+//JWT
+app.register(fastifyJwt, {
+  secret: env.API_KEY,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m',
+  },
+});
+app.register(fastifyCookie);
+
+//health check
+app.get('/health', async () => {
+  return { status: 'ok' };
+});
+
 // Registro das rotas
+app.register(authRoutes, { prefix: '/auth' });
 app.register(userRoutes, { prefix: '/user' });
 
 // Tratamento de erros
-app.setErrorHandler((error, _, reply) => {
-  console.log('Erro capturado:', error);
-  if (error.validation) {
-    return reply.status(400).send({
-      statusCode: 400,
-      errorCode: 'VALIDATION_ERROR',
-      message: 'Validation error.',
-      details: error.validation.map((error) => error.message),
-    });
-  }
-
-  if (env.NODE_ENV !== 'production') {
-    console.error(error);
-  }
-  return reply.status(500).send({
-    statusCode: 500,
-    errorCode: 'INTERNAL_SERVER_ERROR',
-    message: 'Internal server error.',
-  });
-});
+app.setErrorHandler(errorHandler);
 
 export { app };

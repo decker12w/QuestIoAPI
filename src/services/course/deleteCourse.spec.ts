@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { DeleteCourseByIdService } from './deleteCoursebyIdService';
 import { InMemoryCourseRepository } from '@/repositories/InMemoryRepository/InMemoryCourseRepositary';
 import { faker } from '@faker-js/faker';
-import { CourseNotFoundError } from '../errors/CourseNotFoundError';
+import { CourseNotFoundError } from '../@errors/CourseNotFound';
 
 let CoursesRepository: InMemoryCourseRepository;
 let sut: DeleteCourseByIdService;

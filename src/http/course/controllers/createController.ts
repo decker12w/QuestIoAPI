@@ -1,7 +1,7 @@
 // http/Course/controllers/createController.ts
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { CreateCourseService } from '@/services/course/createCourse';
-import { CourseAlreadyExistsError } from '@/services/errors/CourseAlreadyExistsError';
+import { CourseAlreadyExistsError } from '@/services/@errors/CourseAlreadyExists';
 import { inject, injectable } from 'tsyringe';
 import { CreateCourseInput } from '@/utils/schemas/course/courseSchema';
 

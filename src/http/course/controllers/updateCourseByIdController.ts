@@ -1,4 +1,4 @@
-import { CourseNotFoundError } from '@/services/errors/CourseNotFoundError';
+import { CourseNotFoundError } from '@/services/@errors/CourseNotFound';
 import { UpdateCourseByIdService } from '@/services/course/updateCourseByIdService';
 import {
   ParamsIdInput,

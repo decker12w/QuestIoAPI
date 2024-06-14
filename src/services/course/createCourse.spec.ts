@@ -3,8 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { CreateCourseService } from './createCourse';
 import { InMemoryCourseRepository } from '@/repositories/InMemoryRepository/InMemoryCourseRepositary';
 import { faker } from '@faker-js/faker';
-import { CourseAlreadyExistsError } from '../errors/CourseAlreadyExistsError';
-
+import { CourseAlreadyExistsError } from '../@errors/CourseAlreadyExists';
 let CoursesRepository: InMemoryCourseRepository;
 let sut: CreateCourseService;
 

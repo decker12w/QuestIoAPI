@@ -24,12 +24,83 @@ model User {
   entry_type       DateTime      @default(now())
   account_status   AccountStatus @default(ACTIVE)
   xp_count         Int           @default(0)
+
+  // Adicionando a relação inversa
+  refreshTokens    RefreshToken[]
+  post             Post[]
+  comment          Comment[]
+  xpincrement      XpIncrement[]
+}
+
+model XpIncrement{
+  id      Int      @id @default(autoincrement())
+  value   Int      @default(0)
+  date    DateTime @default(now())
+  content String
+  id_user Int
+
+  user    User     @relation(fields: [id_user], references: [id])
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Course {
   id          Int    @id @default(autoincrement())
   name        String @db.VarChar(255)
   description String @db.VarChar(255)
+
+// Adicionando a relação inversa
+  schoolroom  Schoolroom[]
+}
+
+model Schoolroom{
+  id            Int      @id @default(autoincrement())
+  creation_date DateTime @default(now())
+  id_course     Int      
+
+  course        Course   @relation(fields: [id_course], references:  [id])
+
+  // Adicionando a relação inversa
+  post          Post[] 
+}
+
+model Post{
+  id            Int       @id @default(autoincrement())
+  creation_date DateTime  @default(now()) 
+  title         String    @db.VarChar(255)
+  content       String    
+  id_user       Int
+  id_schoolroom Int
+
+  user          User        @relation(fields: [id_user], references:  [id])
+  schoolroom    Schoolroom  @relation(fields: [id_schoolroom], references:  [id])
+
+  comment          Comment[]
+}
+
+model Comment{
+  id            Int       @id @default(autoincrement())
+  creation_date DateTime  @default(now())
+  content       String    
+  id_user       Int
+  id_post       Int
+  id_comment    Int
+
+  user          User      @relation(fields: [id_user], references:  [id])
+  post          Post      @relation(fields: [id_post], references:  [id])
+  comment       Comment   @relation(fields: [id_comment], references:  [id])
+
+  comment       Comment[]
+
 }
 
 enum UserRole {
