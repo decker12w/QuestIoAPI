@@ -12,6 +12,7 @@ import fastifyCookie from '@fastify/cookie';
 import { errorsAuthSchemas } from './utils/schemas/auth/errorsSchema';
 import { errorsRefreshTokenSchemas } from './utils/schemas/refreshToken/errorsSchema';
 import { authSchemas } from './utils/schemas/auth/authSchema';
+import cors from '@fastify/cors';
 
 const app = fastify({
   ajv: {
@@ -48,6 +49,11 @@ app.register(fastifyJwt, {
   },
 });
 app.register(fastifyCookie);
+
+//CORS
+app.register(cors, {
+  origin: ['*'],
+});
 
 //health check
 app.get('/health', async () => {
