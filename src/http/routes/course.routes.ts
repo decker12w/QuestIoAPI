@@ -1,12 +1,13 @@
 import { FastifyInstance } from 'fastify';
+
+import { $ref } from '@/utils/schemas/course/courseSchema';
+import { $errorsRef } from '@/utils/schemas/course/errorsSchema';
 import {
   createCourseController,
   getCourseByIdController,
   deleteCourseByIdController,
   updateCourseByIdController,
-} from '@/lib/container/course/containerCourse';
-import { $ref } from '@/utils/schemas/course/courseSchema';
-import { $errorsRef } from '@/utils/schemas/course/errorsSchema';
+} from '@/lib/container/resolveDependency';
 
 export async function CourseRoutes(app: FastifyInstance) {
   app.post(
