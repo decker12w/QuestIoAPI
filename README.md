@@ -54,19 +54,19 @@ npm i
 
 - Para rodar os testes da aplicação
 
-  - Testes unitários
+  - **Testes unitários**
 
     ```bash
     npm run test
     ```
 
-  - Testes e2e
+  - **Testes e2e**
 
     ```bash
     npm run test:e2e
     ```
 
-  - Todos os testes
+  - **Todos os testes**
 
     ```bash
     npm run test:all

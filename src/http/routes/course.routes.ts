@@ -4,7 +4,7 @@ import {
   getCourseByIdController,
   deleteCourseByIdController,
   updateCourseByIdController,
-} from '@/lib/container/containerCourse';
+} from '@/lib/container/course/containerCourse';
 import { $ref } from '@/utils/schemas/course/courseSchema';
 import { $errorsRef } from '@/utils/schemas/course/errorsSchema';
 

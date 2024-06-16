@@ -1,8 +1,3 @@
-import { CreateCourseController } from '@/http/course/controllers/createController';
-import { DeleteCourseByIdController } from '@/http/course/controllers/deleteCourseByIdController';
-import { GetCourseByIdController } from '@/http/course/controllers/getCourseByIdController';
-import { UpdateCourseByIdController } from '@/http/course/controllers/updateCourseByIdController';
-
 import { PrismaCourseRepository } from '@/repositories/prismaRepository/prismaCourseRepository';
 import { CourseRepository } from '@/repositories/courseRepository';
 import { CreateCourseService } from '@/services/course/createCourse';
@@ -10,6 +5,10 @@ import { DeleteCourseByIdService } from '@/services/course/deleteCoursebyIdServi
 import { GetCourseByIdService } from '@/services/course/getCourseById';
 import { UpdateCourseByIdService } from '@/services/course/updateCourseByIdService';
 import { container } from 'tsyringe';
+import { CreateCourseController } from '@/http/controllers/course/createController';
+import { DeleteCourseByIdController } from '@/http/controllers/course/deleteCourseByIdController';
+import { GetCourseByIdController } from '@/http/controllers/course/getCourseByIdController';
+import { UpdateCourseByIdController } from '@/http/controllers/course/updateCourseByIdController';
 
 //Repositories
 container.register<CourseRepository>('CoursesRepository', {
@@ -49,25 +48,3 @@ container.register<UpdateCourseByIdService>('UpdateCourseByIdService', {
 container.register<DeleteCourseByIdController>('DeleteCourseByIdController', {
   useClass: DeleteCourseByIdController,
 });
-
-// Resolve
-const createCourseController = container.resolve<CreateCourseController>(
-  'CreateCourseController'
-);
-const getCourseByIdController = container.resolve<GetCourseByIdController>(
-  'GetCourseByIdController'
-);
-
-const updateCourseByIdController = container.resolve<UpdateCourseByIdController>(
-  'UpdateCourseByIdController'
-);
-const deleteCourseByIdController = container.resolve<DeleteCourseByIdController>(
-  'DeleteCourseByIdController'
-);
-
-export {
-  createCourseController,
-  getCourseByIdController,
-  updateCourseByIdController,
-  deleteCourseByIdController,
-};
