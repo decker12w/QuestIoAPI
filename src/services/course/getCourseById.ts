@@ -9,7 +9,7 @@ import {
 @injectable()
 export class GetCourseByIdService {
   constructor(
-    @inject('CoursesRepository') private CoursesRepository: CourseRepository
+    @inject('CourseRepository') private CoursesRepository: CourseRepository
   ) {}
 
   async execute({ id }: ParamsIdInput): Promise<CourseOutput> {

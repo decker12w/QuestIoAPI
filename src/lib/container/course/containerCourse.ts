@@ -11,7 +11,7 @@ import { GetCourseByIdController } from '@/http/controllers/course/getCourseById
 import { UpdateCourseByIdController } from '@/http/controllers/course/updateCourseByIdController';
 
 //Repositories
-container.register<CourseRepository>('CoursesRepository', {
+container.register<CourseRepository>('CourseRepository', {
   useClass: PrismaCourseRepository,
 });
 
