@@ -1,14 +1,32 @@
-version: 2.27.0
+version: '2.27.0' # Atualize a versão do Docker Compose se necessário
 
 services:
-  api_questIO:
+  db_questio:
     image: postgres
     ports:
-      - 5432:5432
+      - '5432:5432'
     restart: always
     env_file:
-      - .env
+      - .env.db
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - default
+
+  api_questio:
+    build:
+      context: .
+    depends_on:
+      - db_questio
+    ports:
+      - '4000:4000'
+    networks:
+      - default
+    env_file:
+      - .env
+
+networks:
+  default:
+    driver: bridge
 volumes:
   pgdata:

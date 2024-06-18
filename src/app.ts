@@ -23,7 +23,7 @@ const app = fastify({
 });
 
 // Swagger
-swaggerDocumentation(app);
+ swaggerDocumentation(app); 
 
 // Adição dos schemas
 const allSchemas = [

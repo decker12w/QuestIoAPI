@@ -1,7 +1,8 @@
+import fastifySwagger from '@fastify/swagger';
 import { FastifyInstance } from 'fastify';
 
 export async function swaggerDocumentation(app: FastifyInstance) {
-  app.register(import('@fastify/swagger'), {
+  app.register(fastifySwagger, {
     openapi: {
       openapi: '3.0.0',
       info: {
