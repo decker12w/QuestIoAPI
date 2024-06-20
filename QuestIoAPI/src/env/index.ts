@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
-  NODE_ENV: z.enum(['dev', 'test', 'production']).default('dev'),
+  NODE_ENV: z.enum(['development', 'test', 'production']),
   API_KEY: z.string(),
 });
 

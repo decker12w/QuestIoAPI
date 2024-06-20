@@ -1,4 +1,4 @@
 node_modules
 build
 .env
-.env.prod
+.env.development

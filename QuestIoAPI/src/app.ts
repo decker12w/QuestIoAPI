@@ -22,8 +22,13 @@ const app = fastify({
   },
 });
 
+// Modo de desenvolvimento
+if (env.NODE_ENV === 'development') {
+  console.log('Development mode');
+}
+
 // Swagger
- swaggerDocumentation(app); 
+swaggerDocumentation(app);
 
 // Adição dos schemas
 const allSchemas = [
