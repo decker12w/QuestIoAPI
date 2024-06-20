@@ -1,4 +1,4 @@
-version: '2.27.0' # Atualize a versão do Docker Compose se necessário
+version: '3.7' # Atualize a versão do Docker Compose se necessário
 
 services:
   db_questio:
