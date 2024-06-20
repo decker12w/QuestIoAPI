@@ -71,3 +71,19 @@ npm i
     ```bash
     npm run test:all
     ```
+
+## Build do Projeto
+
+- Para realizar o build da aplicação execute o comando
+
+  ```bash
+      npm run build
+  ```
+
+  - Após a execução, um diretório chamado "build" será criado na raiz do projeto contendo os arquivos compilados e minificados da aplicação prontos para serem implantados em um ambiente de produção.
+
+- Para executar o arquivo de build utilize
+
+  ```bash
+    npm run build
+  ```
